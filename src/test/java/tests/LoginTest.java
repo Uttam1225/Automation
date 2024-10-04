@@ -2,36 +2,30 @@ package tests;
 
 import base.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.LoginPage;
-import utils.SecretsManagerUtil;
-import org.json.JSONObject;
+import utils.FetchAWSCreds;
+import utils.SensitiveDataHandler;
+import static constants.AppConstants.DRIVER_TITLE;
+import static constants.AppConstants.USERNAME;
+
 
 public class LoginTest extends BaseTest {
-
-    private String password;
-    private String name;
-
-    @BeforeClass
-    public void setUp() {
-        SecretsManagerUtil secretsManager = new SecretsManagerUtil("MyApp/Naukri.com/Credentials", "us-east-1");
-        JSONObject secret = secretsManager.getSecret();
-        password = secret.getString("password");
-        name = secret.getString("name");
-    }
 
     @Test
     public void testValidLogin() {
         LoginPage loginPage = new LoginPage(driver);
+        //creating object for Sensitive Data Handler class
+        SensitiveDataHandler sensitiveData = new SensitiveDataHandler();
+        FetchAWSCreds password = sensitiveData.fetechAwsCreds();
+        FetchAWSCreds name = sensitiveData.fetechAwsCreds();
         loginPage.clickLoginButton();
-        loginPage.enterUsername("uuusss1225@gmail.com");
-        loginPage.enterPassword(password);
+        loginPage.enterUsername(USERNAME);
+        loginPage.enterPassword(password.firstString());
         loginPage.clickSignInButton();
         // Assert condition
-        Assert.assertTrue(driver.getTitle().contains("Naukri.com"));
+        Assert.assertTrue(driver.getTitle().contains(DRIVER_TITLE));
         // Assert condition for successful login to correct creds
-        loginPage.isLoginSuccessful(name);
+        loginPage.isLoginSuccessful(name.secondString());
     }
 }

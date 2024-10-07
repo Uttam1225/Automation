@@ -1,8 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,7 +9,9 @@ import org.testng.Assert;
 import utils.FetchAWSCreds;
 import utils.SensitiveDataHandler;
 
+import java.awt.*;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Set;
 
 import static constants.AppConstants.GFG_TITLE;
@@ -26,11 +26,13 @@ public class GfgPotdPage {
     @FindBy(xpath = "//button[contains(@class, 'signinButton')]")   // xpath for login button
     private WebElement signInButton;
     @FindBy(xpath = "//input[contains(@class, 'mb15 next_input')]")  // xpath for sign-in username
-    private  WebElement userName;
+    private WebElement userName;
     @FindBy(xpath = "//input[contains(@placeholder, 'Password')]")   // xpath for password
     private WebElement passwordField;
-    @FindBy(xpath = "//button[contains(@title, 'Sign In')]")
-    private  WebElement clickOnSubmitButton;
+    @FindBy(xpath = "//button[@type = 'submit']")
+    private WebElement clickOnSubmitButton;
+    @FindBy(xpath = "//button[contains(@class, 'loginBtn btnGreen notSocialAuthBtn')]")
+    private WebElement clickOnSubmitButton1;
     @FindBy(xpath = "//h1[@class='problemOfTheDay_potd_banner_heading__H0fpf']")
     private WebElement potd;
 
@@ -39,7 +41,6 @@ public class GfgPotdPage {
     private WebElement skipButton;*/
     @FindBy(xpath = "//button[contains(@class, 'ui button problemOfTheDay_POTDCntBtn__SSQfX')]")
     private WebElement clickOnSolveProblemButton;
-
 
 
     // Constructor to initialize WebDriver
@@ -62,7 +63,27 @@ public class GfgPotdPage {
     }
 
     public void clickOnSubmitButton() {
-        clickOnSubmitButton.click();
+        if(clickOnSubmitButton.isDisplayed() || clickOnSubmitButton1.isDisplayed()) {
+            try {
+                ArrayList<Object> list = new ArrayList<>();
+                if (list.getLast() == "1" || list.isEmpty()) {
+                    /*JavascriptExecutor js = (JavascriptExecutor) driver;
+                    js.executeScript("arguments[0].click();", clickOnSubmitButton);*/
+                    clickOnSubmitButton1.click();
+                    list.add("0");
+                } else {
+                    /*JavascriptExecutor js = (JavascriptExecutor) driver;
+                    js.executeScript("arguments[0].click();", clickOnSubmitButton1);*/
+                    clickOnSubmitButton.click();
+                    list.add("1");
+                }
+            } catch (NoSuchElementException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("Submit button is not displayed on UI!!!");
+        }
     }
 
     public void validationForSuccessfulLogin() {
@@ -94,5 +115,7 @@ public class GfgPotdPage {
             }
         }
         System.out.println("New tab title: " + driver.getTitle());
+        String moniuttam = driver.getTitle().trim();
+        System.out.println("moniuttam title for problem=  " + moniuttam);
     }
 }

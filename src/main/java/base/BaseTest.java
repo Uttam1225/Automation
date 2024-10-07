@@ -9,12 +9,11 @@ public class BaseTest {
 
     protected WebDriver driver;
 
-    @BeforeMethod
-    public void setUp() {
+    public void setUp(String url) {
         String browser = System.getProperty("browser", "edge");  // Default to Edge if no browser is specified
         driver = WebDriverFactory.createDriver(browser);
         driver.manage().window().maximize();
-        driver.get("https://www.geeksforgeeks.org/problem-of-the-day");
+        driver.get(url);
     }
 
     @AfterMethod

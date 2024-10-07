@@ -24,4 +24,10 @@ public class ConfigReader {
     public String getMySkillSet() {
         return getProperty("pathToMySkillSetFile");
     }
+    public String returnGfgUrl() {
+        return getProperty("urlForGfgWebsite");
+    }
+    public String returnChatgptUrl() {
+        return getProperty("urlForChatgptWebsite");
+    }
 }

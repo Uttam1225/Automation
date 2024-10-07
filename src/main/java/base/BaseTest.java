@@ -14,7 +14,7 @@ public class BaseTest {
         String browser = System.getProperty("browser", "edge");  // Default to Edge if no browser is specified
         driver = WebDriverFactory.createDriver(browser);
         driver.manage().window().maximize();
-        driver.get("https://www.naukri.com/");
+        driver.get("https://www.geeksforgeeks.org/problem-of-the-day");
     }
 
     @AfterMethod

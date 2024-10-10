@@ -15,16 +15,17 @@ public class GfgPotd extends BaseTest {
         setUp(config.returnGfgUrl());
     }
 
-    public void gfgLogin(GfgPotdPage gfg) {
+    public void gfgLogin(GfgPotdPage gfg) throws InterruptedException {
         gfg.clickSignInButton();
         gfg.enterUserName();
         gfg.enterPassword();
+        Thread.sleep(5000);
         gfg.clickOnSubmitButton();
         gfg.validationForSuccessfulLogin();
     }
 
     @Test
-    public void getProblem() {
+    public void getProblem() throws InterruptedException {
         GfgPotdPage gfg = new GfgPotdPage(driver);
         gfgLogin(gfg);
         gfg.clickOnSolveProblemButton();

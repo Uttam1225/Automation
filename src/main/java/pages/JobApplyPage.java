@@ -5,14 +5,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
+
+import static constants.AppConstants.DESIGNATION;
+import static constants.AppConstants.EXPERIENCE;
 import static utils.GenericUtils.getSkillsFromTextFile;
 
 public class JobApplyPage {
     private final WebDriver driver;
 
-    @FindBy(xpath = "//span[contains(@class, 'nI-gNb-sb__placeholder nI-gNb-sb__placeholder--prefill')]")
+    @FindBy(xpath = "//span[contains(@class, 'nI-gNb-sb__placeholder')]")
     private WebElement clickSearchButton;
     @FindBy(xpath = "//input[contains(@placeholder, 'Enter keyword / designation / companies')]")
     private WebElement enterSearchDesignation;
@@ -29,13 +36,14 @@ public class JobApplyPage {
     }
 
     public void clickOnSearchButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement clickSearchButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(@class, 'nI-gNb-sb__placeholder')]")));
         clickSearchButton.click();
     }
 
-    public void enterSearchingDesignationAndExperience(String designation , String exp) {
-        enterSearchDesignation.sendKeys(designation);
-        Select dropdown = new Select(enterSearchExperience);
-        dropdown.selectByVisibleText(exp);
+    public void enterSearchingDesignationAndExperience() {
+        enterSearchDesignation.sendKeys(DESIGNATION);
+        enterSearchExperience.sendKeys(EXPERIENCE);
         searchButton.click();
     }
 

@@ -29,10 +29,10 @@ public class GfgPotdPage {
     private WebElement userName;
     @FindBy(xpath = "//input[contains(@placeholder, 'Password')]")   // xpath for password
     private WebElement passwordField;
-    @FindBy(xpath = "//button[@type = 'submit']")
+    @FindBy(xpath = "//button[contains(@type, 'submit')]")
     private WebElement clickOnSubmitButton;
-    @FindBy(xpath = "//button[contains(@class, 'loginBtn btnGreen notSocialAuthBtn')]")
-    private WebElement clickOnSubmitButton1;
+    /*@FindBy(xpath = "//button[contains(@class, 'loginBtn btnGreen notSocialAuthBtn')]")
+    private WebElement clickOnSubmitButton1;*/
     @FindBy(xpath = "//h1[@class='problemOfTheDay_potd_banner_heading__H0fpf']")
     private WebElement potd;
 
@@ -63,18 +63,17 @@ public class GfgPotdPage {
     }
 
     public void clickOnSubmitButton() {
-        if(clickOnSubmitButton.isDisplayed() || clickOnSubmitButton1.isDisplayed()) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10)); // Wait for up to 10 seconds
+        WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(@class, 'loginBtn btnGreen notSocialAuthBtn')]")));
+        if(submitButton.isDisplayed() || submitButton.isEnabled()) {
             try {
                 ArrayList<Object> list = new ArrayList<>();
                 if (list.getLast() == "1" || list.isEmpty()) {
-                    /*JavascriptExecutor js = (JavascriptExecutor) driver;
-                    js.executeScript("arguments[0].click();", clickOnSubmitButton);*/
-                    clickOnSubmitButton1.click();
+                    submitButton.click();
                     list.add("0");
-                } else {
-                    /*JavascriptExecutor js = (JavascriptExecutor) driver;
-                    js.executeScript("arguments[0].click();", clickOnSubmitButton1);*/
-                    clickOnSubmitButton.click();
+                }
+                else {
+                    submitButton.click();
                     list.add("1");
                 }
             } catch (NoSuchElementException e) {

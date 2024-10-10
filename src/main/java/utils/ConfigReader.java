@@ -30,4 +30,8 @@ public class ConfigReader {
     public String returnChatgptUrl() {
         return getProperty("urlForChatgptWebsite");
     }
+    public String returnNaukriUrl() {
+        return getProperty("urlForNaukriWebsite");
+    }
+    public String returnLinkedINUrl() { return getProperty("urlForLinkedInWebsite"); }
 }

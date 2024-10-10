@@ -2,10 +2,10 @@
 <suite name="Suite" verbose="1">
     <test name="All Tests">
         <classes>
-            <class name="tests.GfgPotd"/>
+            <!--<class name="tests.GfgPotd"/>  -->
             <!-- <class name="tests.Chatgpt"/>  -->
-            <!--<class name="tests.LoginTest"/>
-            <class name="tests.JobApply"/> --> <!-- Add other test classes here -->
+            <!--<class name="tests.JobApply"/>  -->   <!-- Add other test classes here -->
+            <class name="tests.LinkedIn"/>
             <!-- Add more test classes as needed -->
         </classes>
     </test>

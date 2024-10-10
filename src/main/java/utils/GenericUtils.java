@@ -1,8 +1,15 @@
 package utils;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -51,5 +58,21 @@ public class GenericUtils {
         double matchScore = similarity.apply(smallText, largeText);
         return matchScore;
     }*/
+
+    public static void scrolldownTillTheEndOfThePage(WebDriver driver) throws InterruptedException {
+        // Scroll down the page to load more elements
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+        Thread.sleep(5000); //wait for content to load
+    }
+
+    public static void scrollupTillTheBeginingOfThePage(WebDriver driver) {
+        // Scroll up to a specific position or element
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollTo(0, 0);"); // Scroll to the top of the page
+        /* or scroll to a specific element if needed
+         WebElement elementToScrollTo = driver.findElement(By.id("elementId"));
+         js.executeScript("arguments[0].scrollIntoView(true);", elementToScrollTo);*/
+    }
 
 }
